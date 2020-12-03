@@ -9,6 +9,7 @@ public class NetworkMgr : MonoBehaviourPunCallbacks
 {
     private string _playerName;
     logManager lm;
+    public bool amMaster = false;
 
     GameObject item;
 
@@ -269,7 +270,6 @@ public class NetworkMgr : MonoBehaviourPunCallbacks
     }
 
 
-
     private void CreatePlayerListItem(Player newPlayer)
     {
         item = Instantiate(playerListItemPrefab, playerListHolder);
@@ -393,7 +393,6 @@ public class NetworkMgr : MonoBehaviourPunCallbacks
 
 
     #endregion
-
 
     #region GAME_START_FUNCTION
 

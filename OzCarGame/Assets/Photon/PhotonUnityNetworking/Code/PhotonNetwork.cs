@@ -779,12 +779,22 @@ namespace Photon.Pun
         /// If the current Master Client times out (closed app, lost connection, etc), messages sent to this client are
         /// effectively lost for the others! A timeout can take 10 seconds in which no Master Client is active.
         ///
-        /// Implement the method IPunCallbacks.OnMasterClientSwitched to be called when the Master Client switched.
+        ///Implement the method IPunCallbacks.OnMasterClientSwitched to be called when the Master Client switched.
         ///
         /// Use PhotonNetwork.SetMasterClient, to switch manually to some other player / client.
         ///
         /// With OfflineMode == true, this always returns the PhotonNetwork.player.
         /// </remarks>
+        /// 
+
+
+        public static void switchMaster(Player newMaster)
+        {
+            PhotonNetwork.SetMasterClient(newMaster);
+        }
+
+
+
         public static Player MasterClient
         {
             get

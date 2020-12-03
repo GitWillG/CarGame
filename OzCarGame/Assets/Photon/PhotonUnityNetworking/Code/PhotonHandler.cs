@@ -14,6 +14,7 @@ namespace Photon.Pun
     using ExitGames.Client.Photon;
     using Photon.Realtime;
     using System.Collections.Generic;
+    
     using UnityEngine;
 
 #if UNITY_5_5_OR_NEWER
@@ -26,7 +27,7 @@ namespace Photon.Pun
     /// </summary>
     public class PhotonHandler : ConnectionHandler, IInRoomCallbacks, IMatchmakingCallbacks
     {
-
+        public bool amMaster = false;
         private static PhotonHandler instance;
         internal static PhotonHandler Instance
         {
@@ -140,7 +141,12 @@ namespace Photon.Pun
         protected void FixedUpdate()
         {
             this.Dispatch();
+            //if (PhotonNetwork.IsMasterClient)
+            //{
+            //    amMaster = true;
+            //}
         }
+
 
         /// <summary>Called in intervals by UnityEngine, after running the normal game code and physics.</summary>
         protected void LateUpdate()
@@ -226,6 +232,8 @@ namespace Photon.Pun
 
         public void OnMasterClientSwitched(Player newMasterClient)
         {
+            PhotonNetwork.switchMaster(newMasterClient);
+
             var views = PhotonNetwork.PhotonViewCollection;
             foreach (var view in views)
             {
