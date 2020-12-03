@@ -8,6 +8,8 @@ TagManager:
   - carManager
   - LM
   - RM
+  - LB
+  - Aligner
   layers:
   - Default
   - TransparentFX

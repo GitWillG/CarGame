@@ -15,6 +15,8 @@ namespace Photon.Pun
     using Photon.Realtime;
     using System.Collections.Generic;
     
+
+
     using UnityEngine;
 
 #if UNITY_5_5_OR_NEWER
@@ -141,9 +143,27 @@ namespace Photon.Pun
         protected void FixedUpdate()
         {
             this.Dispatch();
-            //if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
+            {
+                amMaster = true;
+                //Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount == 1);
+                if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+                {
+                    if (GameObject.FindGameObjectWithTag("LB") != false)
+                    {
+                        GameObject buttonParent = GameObject.FindGameObjectWithTag("LB");
+                        buttonParent.transform.GetChild(3).gameObject.SetActive(true);
+                    }
+                }
+            }
+
+            //else
             //{
-            //    amMaster = true;
+            //    if (GameObject.FindGameObjectWithTag("LB") != false && PhotonNetwork.IsMasterClient)
+            //    {
+            //        GameObject buttonParent = GameObject.FindGameObjectWithTag("LB");
+            //        buttonParent.transform.GetChild(3).gameObject.SetActive(false);
+            //    }
             //}
         }
 

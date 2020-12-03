@@ -21,6 +21,7 @@ public class GO_ID_Duo
 
 public class GameManager : MonoBehaviourPun
 {
+    public GameObject leaveButton;
     private int lastAssignedRank = 0;
     public GameObject endText;
 
@@ -120,7 +121,6 @@ public class GameManager : MonoBehaviourPun
 
 
         }
-
     }
 
 
@@ -133,6 +133,7 @@ public class GameManager : MonoBehaviourPun
         int indx=playerRanks.FindIndex(x => x.viewID == photonViewID);
         playerRanks[indx].rank = lastAssignedRank;
 
+
         PhotonNetwork.RaiseEvent((byte)GameManager.raiseEventCodes.raceFinishCode, new object[] { playerRanks[indx].viewID, lastAssignedRank } , new RaiseEventOptions() { Receivers = ReceiverGroup.All }, SendOptions.SendReliable);
     }
 
@@ -142,13 +143,34 @@ public class GameManager : MonoBehaviourPun
     public void OnEventCallback(EventData photonEventData)
     {
 
+
+
         if (photonEventData.Code == (byte)raiseEventCodes.raceFinishUpdateRank)
         {
             object[] incomingData = (object[])photonEventData.CustomData;
             int viewID = (int)incomingData[1];
+            if (PhotonNetwork.CountOfPlayers == 1)
+            {
+                leaveButton.SetActive(true);
+            }
             CheckAndUpdateRank(viewID);
         }
 
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
+        ///////////////////
         if (photonEventData.Code == (byte)raiseEventCodes.raceFinishCode)
         {
             object[] incomingData = (object[])photonEventData.CustomData;
