@@ -10,6 +10,7 @@ TagManager:
   - RM
   - LB
   - Aligner
+  - GM
   layers:
   - Default
   - TransparentFX

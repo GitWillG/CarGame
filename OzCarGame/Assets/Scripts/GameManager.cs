@@ -21,6 +21,11 @@ public class GO_ID_Duo
 
 public class GameManager : MonoBehaviourPun
 {
+
+    public GameObject finalScore;
+    public int playersFinished=0;
+    public GameObject waitingText;
+    public GameObject endLeaveButton;
     public GameObject leaveButton;
     private int lastAssignedRank = 0;
     public GameObject endText;
@@ -45,6 +50,7 @@ public class GameManager : MonoBehaviourPun
     /// drag-drop the standings items from the canvas into this list
     /// </summary>
     public List<PlayerStandingUIItem> standingsUIList;
+    public List<PlayerStandingUIItem> standingsUIList2;
 
     /// <summary>
     /// drag-drop the lap trigger point game objects
@@ -57,6 +63,8 @@ public class GameManager : MonoBehaviourPun
 
     private void Awake()
     {
+
+        Destroy(GameObject.FindGameObjectWithTag("LM").gameObject);
         if (instance == null)
         {
             DontDestroyOnLoad(this.gameObject);
@@ -67,9 +75,24 @@ public class GameManager : MonoBehaviourPun
             Destroy(gameObject);
         }
 
+
+
     }
     #endregion
+    private void Update()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            waitingText.SetActive(false);
+            endLeaveButton.SetActive(true);
 
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            {
+                leaveButton.SetActive(true);
+            }
+        }
+
+    }
 
     /// <summary>
     /// drag-drop the empty game objects that denote the player start points
@@ -98,7 +121,7 @@ public class GameManager : MonoBehaviourPun
         if(!PhotonNetwork.IsConnectedAndReady)
         {
             Debug.Log("<color=red> Not connected to photon network. can't proceed. </color>");
-            lm.updateLog(" Not connected to photon network. can't proceed.");
+            //lm.updateLog(" Not connected to photon network. can't proceed.");
         }
         else
         {
@@ -156,23 +179,10 @@ public class GameManager : MonoBehaviourPun
             CheckAndUpdateRank(viewID);
         }
 
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
-        ///////////////////
+
         if (photonEventData.Code == (byte)raiseEventCodes.raceFinishCode)
         {
+            playersFinished++;
             object[] incomingData = (object[])photonEventData.CustomData;
             
             int viewID = (int)incomingData[0];
@@ -192,8 +202,17 @@ public class GameManager : MonoBehaviourPun
             standingsUIList[duo.rank - 1].gameObject.SetActive(true);
 
             standingsUIList[duo.rank - 1].UpdateInfo(duo.pv.Owner.NickName, duo.rank,viewID==duo.viewID);
+            standingsUIList2[duo.rank - 1].gameObject.SetActive(true);
+            standingsUIList2[duo.rank - 1].UpdateInfo(duo.pv.Owner.NickName, duo.rank, viewID == duo.viewID);
 
-            endText.SetActive(true);
+            if (playersFinished == PhotonNetwork.CurrentRoom.PlayerCount)
+            {
+                finalScore.SetActive(true);
+
+                endText.SetActive(true);
+            }
+
+
 
         }
 
@@ -203,9 +222,19 @@ public class GameManager : MonoBehaviourPun
 
     public void finishRace()
     {
-        SceneManager.LoadScene("MainLobbyV2");
-        PhotonNetwork.Disconnect();
+        Destroy(GameObject.FindGameObjectWithTag("carManager").gameObject);
+        Destroy(GameObject.FindGameObjectWithTag("GM").gameObject);
+        //if (PhotonNetwork.IsMasterClient)
+        //{
+        //}
+        //else
+        //{
+        //    PhotonNetwork.LeaveRoom();
 
+        //}
+
+        PhotonNetwork.Disconnect();
+        SceneManager.LoadScene("MainLobbyV2");
     }
 
 

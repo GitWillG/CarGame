@@ -29,7 +29,6 @@ namespace Photon.Pun
     /// </summary>
     public class PhotonHandler : ConnectionHandler, IInRoomCallbacks, IMatchmakingCallbacks
     {
-        public bool amMaster = false;
         private static PhotonHandler instance;
         internal static PhotonHandler Instance
         {
@@ -143,19 +142,7 @@ namespace Photon.Pun
         protected void FixedUpdate()
         {
             this.Dispatch();
-            if (PhotonNetwork.IsMasterClient)
-            {
-                amMaster = true;
-                //Debug.Log(PhotonNetwork.CurrentRoom.PlayerCount == 1);
-                if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-                {
-                    if (GameObject.FindGameObjectWithTag("LB") != false)
-                    {
-                        GameObject buttonParent = GameObject.FindGameObjectWithTag("LB");
-                        buttonParent.transform.GetChild(3).gameObject.SetActive(true);
-                    }
-                }
-            }
+
 
             //else
             //{

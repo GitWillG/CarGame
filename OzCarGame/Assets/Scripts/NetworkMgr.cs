@@ -437,6 +437,7 @@ public class NetworkMgr : MonoBehaviourPunCallbacks
     public void OnStartGameButtonClicked()
     {
 
+
         object gameModeCode;
 
         if(PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue("m",out gameModeCode))
@@ -476,7 +477,7 @@ public class NetworkMgr : MonoBehaviourPunCallbacks
             Destroy(t);
         }
 
-        lm.updateLog("Left the server. Server has closed.");
+        //lm.updateLog("Left the server. Server has closed.");
         
     }
 

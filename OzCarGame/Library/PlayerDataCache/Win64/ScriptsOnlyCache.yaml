@@ -344,6 +344,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12542}
     - Class: 114
+      Script: {instanceID: 12598}
+    - Class: 114
       Script: {instanceID: 12740}
     - Class: 114
       Script: {instanceID: 12892}
@@ -714,7 +716,7 @@ ScriptsOnlyBuild:
     className: ThirdPersonCharacter
   - hash:
       serializedVersion: 2
-      Hash: ec23a58c4d2b9ab65a4fbcd9a2933c15
+      Hash: 11df54cb47bd74c537f3c732a94ea97d
     assemblyName: PhotonUnityNetworking.dll
     namespaceName: Photon.Pun
     className: PhotonHandler
@@ -1548,7 +1550,7 @@ ScriptsOnlyBuild:
     className: SplinePosition
   - hash:
       serializedVersion: 2
-      Hash: 3fffce179b39c06d98b3afac162b236b
+      Hash: 5ea1f9d0f2ece7ab5f94ae66c182f4bb
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
